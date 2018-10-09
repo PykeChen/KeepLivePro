@@ -1,5 +1,6 @@
 package com.astana.cpy.keeplive;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 
 import com.astana.cpy.keeplive.method1.LiveService;
 import com.astana.cpy.keeplive.method2.ForegroundLiveService;
+import com.astana.cpy.keeplive.method3.LocalDemonService;
+import com.astana.cpy.keeplive.method3.RemoteDemonService;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -73,6 +76,10 @@ public class MainActivity extends AppCompatActivity {
      * @param view
      */
     public void keepLive_third(View view) {
+        // 启动本地服务和远程服务
+        startService(new Intent(this, LocalDemonService.class));
+        startService(new Intent(this, RemoteDemonService.class));
+
     }
 
 }

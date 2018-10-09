@@ -36,6 +36,10 @@
         <service android:name=".method2.ForegroundLiveService$InnerService"
             android:process=":fore_inner_service"/>
 
+        <service android:name=".method3.LocalDemonService" />
+        <service android:name=".method3.RemoteDemonService"
+            android:process=":remote_demon"/>
+
     </application>
 
 </manifest>
