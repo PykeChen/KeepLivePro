@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.astana.cpy.keeplive">
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!--设置targetSDK=28之后,启动前台服务都需要注册 -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <application
+        android:name=".KeepLiveApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name="com.astana.cpy.keeplive.MainActivity"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name="com.astana.cpy.keeplive.method1.LiveActivity"
+            android:theme="@style/LiveStyle"/>
+
+        <service android:name=".method1.LiveService"
+            android:process=":live_service"/>
+
+        <service android:name=".method2.ForegroundLiveService"
+            android:process=":foreground_service"/>
+
+        <service android:name=".method2.ForegroundLiveService$InnerService"
+            android:process=":fore_inner_service"/>
+
+    </application>
+
+</manifest>
