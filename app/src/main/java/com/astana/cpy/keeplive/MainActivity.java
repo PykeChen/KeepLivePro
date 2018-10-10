@@ -13,6 +13,7 @@ import com.astana.cpy.keeplive.method1.LiveService;
 import com.astana.cpy.keeplive.method2.ForegroundLiveService;
 import com.astana.cpy.keeplive.method3.LocalDemonService;
 import com.astana.cpy.keeplive.method3.RemoteDemonService;
+import com.astana.cpy.keeplive.method4.JobDemonService;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -82,4 +83,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * 保活方案4-JobService
+     *
+     * @param view
+     */
+    public void keepLive_fourth(View view) {
+        startService(new Intent(this, JobDemonService.class));
+    }
 }

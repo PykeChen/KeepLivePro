@@ -7,8 +7,10 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.Build;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -36,16 +38,23 @@ public class LocalDemonService extends Service {
     }
 
     @Override
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public int onStartCommand(Intent intent, int flags, int startId) {
         this.bindService(new Intent(this, RemoteDemonService.class), myServiceConnection, Context.BIND_IMPORTANT);
         pintent = PendingIntent.getService(this, 0, intent, 0);
-        Notification notification = new Notification.Builder(this, KeepLiveApplication.NOTIFICATION_CHANNEL_ID_INFO)
-                .setSmallIcon(R.mipmap.ic_launcher)
+        Notification.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            builder = new Notification.Builder(this, KeepLiveApplication.NOTIFICATION_CHANNEL_ID_INFO);
+        } else {
+            builder = new Notification.Builder(this);
+        }
+        Notification notification  = builder.setSmallIcon(R.mipmap.ic_launcher)
                 .setTicker("本地服务启动中")
                 .setContentText("防止被杀掉")
                 .setContentTitle("本地服务标题")
                 .setContentIntent(pintent)
                 .setWhen(System.currentTimeMillis()).build();
+
         // 设置service为前台进程，避免手机休眠时系统自动杀掉该服务
         startForeground(startId, notification);
         return START_STICKY;

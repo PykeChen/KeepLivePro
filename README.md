@@ -13,3 +13,4 @@ The current demo show the three ways to keep.
 1. adb root to get root permission.
 2. adb shell ps(for processes current);adb shell ps | grep com.astana.cpy.keeplive(for check proecess of app)
 3. adb shell cat /proc/{process id of app}/oom_adj(for check the process priority)
+4. adb shell kill

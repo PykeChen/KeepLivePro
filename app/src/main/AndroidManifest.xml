@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.astana.cpy.keeplive">
 
+    <!-- JobService需要 -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <!--设置targetSDK=28之后,启动前台服务都需要注册 -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
@@ -39,6 +40,15 @@
         <service android:name=".method3.LocalDemonService" />
         <service android:name=".method3.RemoteDemonService"
             android:process=":remote_demon"/>
+
+        <!--声明权限，使得仅有JobScheduler可以调用该服务-->
+        <service
+            android:name=".method4.MyJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+        <service
+            android:name=".method4.JobDemonService"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:process=":job_demon"/>
 
     </application>
 

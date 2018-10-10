@@ -43,10 +43,15 @@ public class ForegroundLiveService extends Service {
             startForeground(NOTIFICATION_ID, new Notification());
         } else {
             // API 18以上，发送Notification并将其置为前台后，启动InnerService
-            // service的onCreate
-            Notification notification = new Notification.Builder(this, KeepLiveApplication.NOTIFICATION_CHANNEL_ID_NONE)
+            Notification.Builder builder;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                builder = new Notification.Builder(this, KeepLiveApplication.NOTIFICATION_CHANNEL_ID_INFO);
+            } else {
+                builder = new Notification.Builder(this);
+            }
+            Notification notification = builder
                     .setSmallIcon(R.mipmap.ic_launcher)  // the status icon
-//                    .setWhen(System.currentTimeMillis())  // the time stamp
+                    .setWhen(System.currentTimeMillis())  // the time stamp
                     .setContentText("IM服务正在运行")  // the contents of the entry
                     .setContentTitle("IM服务标题")
                     .setAutoCancel(true)
@@ -70,7 +75,12 @@ public class ForegroundLiveService extends Service {
             super.onCreate();
             Log.d("cpy", "InnerService onCreate");
             //发送与KeepLiveService中ID相同的Notification，然后将其取消并取消自己的前台显示
-            Notification.Builder builder = new Notification.Builder(this, KeepLiveApplication.NOTIFICATION_CHANNEL_ID_NONE);
+            Notification.Builder builder;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                builder = new Notification.Builder(this, KeepLiveApplication.NOTIFICATION_CHANNEL_ID_INFO);
+            } else {
+                builder = new Notification.Builder(this);
+            }
             builder.setSmallIcon(R.mipmap.ic_launcher)
                     .setContentText("IM服务正在运行")
                     .setContentTitle("IM服务标题")

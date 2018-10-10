@@ -35,6 +35,13 @@
             android:text="相互唤醒"
             android:minWidth="200dp"/>
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="keepLive_fourth"
+            android:text="JobService保活"
+            android:minWidth="200dp"/>
+
     </LinearLayout>
 
     <android.support.design.widget.BottomNavigationView
