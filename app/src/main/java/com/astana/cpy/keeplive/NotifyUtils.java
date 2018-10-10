@@ -10,11 +10,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
 import android.service.notification.NotificationListenerService;
-import android.support.annotation.Keep;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationManagerCompat;
-
-import com.astana.cpy.keeplive.method5.SpyNotificationService;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

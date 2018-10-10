@@ -1,24 +1,19 @@
 package com.astana.cpy.keeplive.method5;
 
-import android.annotation.TargetApi;
-import android.app.Notification;
-import android.app.PendingIntent;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.Parcel;
-import android.os.Parcelable;
+import android.app.ActivityManager;
+import android.content.Context;
+import android.content.Intent;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
-import android.text.TextUtils;
 import android.util.Log;
-import android.widget.RemoteViews;
+import android.widget.Toast;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
+import com.astana.cpy.keeplive.method3.RemoteDemonService;
+
 import java.util.List;
 
 /**
- * 粘性服务&与系统服务捆绑
+ * 粘性服务&与系统服务捆绑 -- 需要特定权限
  *
  * 一.粘性服务-onStartCommand的返回值:START_STICKY, START_NOT_STICKY, START_REDELIVER_INTENT
  *
@@ -42,6 +37,12 @@ public class LiveStickyService extends NotificationListenerService {
      */
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
+        Log.i("cpy", "执行了onStartJob方法");
+        boolean isRemoteServiceWork = isServiceWork(this, "com.astana.cpy.keeplive.method3.RemoteDemonService");
+        if (!isRemoteServiceWork) {
+           this.startService(new Intent(this, RemoteDemonService.class));
+            Toast.makeText(this, "LiveStickyService进程启动", Toast.LENGTH_SHORT).show();
+        }
 
     }
 
@@ -60,6 +61,25 @@ public class LiveStickyService extends NotificationListenerService {
     public void onListenerConnected() {
         super.onListenerConnected();
         Log.d(TAG, "onListenerConnected() called");
+    }
+
+    // 判断服务是否正在运行
+    public boolean isServiceWork(Context mContext, String serviceName) {
+        boolean isWork = false;
+        ActivityManager myAM = (ActivityManager) mContext
+                .getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningServiceInfo> myList = myAM.getRunningServices(100);
+        if (myList.size() <= 0) {
+            return false;
+        }
+        for (int i = 0; i < myList.size(); i++) {
+            String mName = myList.get(i).service.getClassName().toString();
+            if (mName.equals(serviceName)) {
+                isWork = true;
+                break;
+            }
+        }
+        return isWork;
     }
 
 }

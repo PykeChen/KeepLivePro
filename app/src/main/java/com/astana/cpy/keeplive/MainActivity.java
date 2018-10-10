@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -14,6 +15,7 @@ import com.astana.cpy.keeplive.method2.ForegroundLiveService;
 import com.astana.cpy.keeplive.method3.LocalDemonService;
 import com.astana.cpy.keeplive.method3.RemoteDemonService;
 import com.astana.cpy.keeplive.method4.JobDemonService;
+import com.astana.cpy.keeplive.method5.LiveStickyService;
 import com.astana.cpy.keeplive.method5.SpyNotificationService;
 
 public class MainActivity extends AppCompatActivity {
@@ -95,9 +97,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     /**
-     * 保活方案5-于系统服务绑定
+     * 保活方案5-与系统服务绑定
      */
     public void keepLive_fifth(View view) {
+        startService(new Intent(this, LiveStickyService.class));
     }
 
     /**
@@ -105,7 +108,6 @@ public class MainActivity extends AppCompatActivity {
      * 局限是国产机会修改最短同步周期（魅蓝NOTE2长达30分钟），并且需要联网才能使用
      */
     public void keepLive_sixth() {
-
     }
 
     /**
@@ -114,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
      * @param view
      */
     public void spy_notification(View view) {
+        Log.d("cpy", "IMI = " + CommonUtils.getIMEI(this));
         if (!NotifyUtils.isNotificationListenerEnabled(this)) {
             NotifyUtils.openNotificationListenSettings(this);
         }
