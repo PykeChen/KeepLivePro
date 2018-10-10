@@ -14,6 +14,7 @@ import com.astana.cpy.keeplive.method2.ForegroundLiveService;
 import com.astana.cpy.keeplive.method3.LocalDemonService;
 import com.astana.cpy.keeplive.method3.RemoteDemonService;
 import com.astana.cpy.keeplive.method4.JobDemonService;
+import com.astana.cpy.keeplive.method5.SpyNotificationService;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -90,5 +91,32 @@ public class MainActivity extends AppCompatActivity {
      */
     public void keepLive_fourth(View view) {
         startService(new Intent(this, JobDemonService.class));
+    }
+
+
+    /**
+     * 保活方案5-于系统服务绑定
+     */
+    public void keepLive_fifth(View view) {
+    }
+
+    /**
+     * 保活方案6-账号同步唤醒APP这种机制很不错，用户强制停止都杀不起创建一个账号并设置同步器，创建周期同步，系统会自动调用同步器，这样就能激活我们的APP，
+     * 局限是国产机会修改最短同步周期（魅蓝NOTE2长达30分钟），并且需要联网才能使用
+     */
+    public void keepLive_sixth() {
+
+    }
+
+    /**
+     * 监测通知栏红包服务
+     *
+     * @param view
+     */
+    public void spy_notification(View view) {
+        if (!NotifyUtils.isNotificationListenerEnabled(this)) {
+            NotifyUtils.openNotificationListenSettings(this);
+        }
+        startService(new Intent(this, SpyNotificationService.class));
     }
 }

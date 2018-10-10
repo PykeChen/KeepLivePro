@@ -24,6 +24,17 @@ public class KeepLiveApplication extends Application{
     public void onCreate() {
         super.onCreate();
         initChannel();
+        mBaseApplication = this;
+    }
+
+    private static Application mBaseApplication = null;
+
+    /**
+     * 获取Application上下文
+     * @return Application上下文
+     */
+    public static Application getApplication() {
+        return mBaseApplication;
     }
 
 }

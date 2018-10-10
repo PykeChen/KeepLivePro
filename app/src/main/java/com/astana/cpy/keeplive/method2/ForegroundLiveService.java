@@ -58,7 +58,7 @@ public class ForegroundLiveService extends Service {
                     .build();
             startForeground(NOTIFICATION_ID, notification);
             Log.d("cpy", "ForegroundLiveService onCreate");
-            //据说android 7.1上已经修复这个bug,没有实现没有notification的前台服务.下面的这个在android p上已无法关闭通知.
+            //android 7.1(具体什么版本待定) 上已经修复这个bug,没有实现没有notification的前台服务.下面的这个在android p上已无法关闭通知.
             //尝试在当前service上是可以关闭通知的,调用stopForeground(true),stopSelf是可以的.
             startService(new Intent(this, InnerService.class));
         }
